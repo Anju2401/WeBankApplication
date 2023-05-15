@@ -1,0 +1,80 @@
+﻿@model IEnumerable<WeBankApplication.Models.Fund_Transfer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<body style="background-color:lightblue">
+
+   
+
+    <br />
+
+    @using (Html.BeginForm(FormMethod.Get))
+    {
+        @Html.TextBox("Searching")
+        <input type="submit" value="search" />
+
+    }
+
+    <br />
+
+    <br />
+
+
+<h2>Fund Transaction Details</h2>
+
+@*<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.account_number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.To_account_number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.amount)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Transaction.account_number)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.account_number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.To_account_number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.amount)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Transaction.account_number)
+        </td>*@
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) 
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+        </td>
+    </tr>
+}
+
+</table>
+
+</body>

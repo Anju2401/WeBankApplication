@@ -1,0 +1,109 @@
+﻿@model WeBankApplication.Models.Fund_Transfer
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<body style="background-color:lightblue">
+
+
+    <br />
+
+    <br />
+
+    <center>
+
+        <div class="w3-container">
+            <h1>
+                <b>
+                    Welcome
+                    <b style="color:palevioletred">@HttpContext.Current.User.Identity.Name</b>
+                </b>
+            </h1>
+            <p> </p>
+        </div>
+    </center>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>FundTransfer</h4>
+            <hr />
+
+
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Transaction_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Transaction_id, new { htmlAttributes = new { @class = "form-control"} })
+                    @Html.ValidationMessageFor(model => model.Transaction_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.account_number, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.account_number, new { htmlAttributes = new { @class = "form-control"} })
+                    @Html.ValidationMessageFor(model => model.account_number, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.To_account_number, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.To_account_number, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.To_account_number, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.amount, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.amount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.amount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.TCCID, "TCCID", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("TCCID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TCCID, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input  type="submit" value="Transfer" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <script>
+    function myFunction() {
+        alert("Confirmation for FundTransfer");
+        }
+
+
+    </script>
+
+    @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
+
+</body>

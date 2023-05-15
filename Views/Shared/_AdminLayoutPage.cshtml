@@ -1,0 +1,82 @@
+﻿
+@{
+    bool isLoggedIn = true;
+    if (string.IsNullOrWhiteSpace(User.Identity.Name))
+    {
+        isLoggedIn = false;
+
+    }
+}
+
+
+
+@{
+    ViewBag.Title = "_AdminLayoutPage";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("WeBank", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                    <li>@Html.ActionLink("AdminLogin", "AdminLogin", "Admin")</li>
+
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        //<li><a>Dear - User.Identity.Name</a></li>
+                        <li>@Html.ActionLink(User.Identity.Name, "Index", "Home")</li>
+                        <li>@Html.ActionLink("AdministratorPanel", "AdminPage", "Admin")</li>
+                        <li>@Html.ActionLink("Signout", "Signout", "Registration")</li>
+                    }
+
+                    else
+                    {
+                        <li> @Html.ActionLink("Login", "Login", "Account") </li>
+
+                    }
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+
+        @RenderBody()
+
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - WeBank</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+

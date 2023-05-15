@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WeBankModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ACCOUNT_HOLDER_DETAILS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_number" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
+          <Property Name="Fullname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Fathername" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Adharno" Type="bigint" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="accounttype" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Branch" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Registration_Date" Type="date" Nullable="false" />
+          <Property Name="Phoneno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CusID" Type="int" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Passcode" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fund_Transfer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Transaction_id" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="account_number" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="To_account_number" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="amount" Type="float" Nullable="false" />
+          <Property Name="TCCID" Type="int" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_number" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="amount" Type="float" Nullable="false" />
+          <Property Name="Transaction_Date" Type="date" Nullable="false" />
+          <Property Name="Transaction_Type" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="AccID" Type="int" />
+        </EntityType>
+        <EntityType Name="User_Register">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Passcode" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__ACCOUNT_H__CusID__38996AB5">
+          <End Role="User_Register" Type="Self.User_Register" Multiplicity="0..1" />
+          <End Role="ACCOUNT_HOLDER_DETAILS" Type="Self.ACCOUNT_HOLDER_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Register">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ACCOUNT_HOLDER_DETAILS">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Fund_Tran__TCCID__3E52440B">
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="0..1" />
+          <End Role="Fund_Transfer" Type="Self.Fund_Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Fund_Transfer">
+              <PropertyRef Name="TCCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__AccID__3B75D760">
+          <End Role="ACCOUNT_HOLDER_DETAILS" Type="Self.ACCOUNT_HOLDER_DETAILS" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT_HOLDER_DETAILS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="AccID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WeBankModelStoreContainer">
+          <EntitySet Name="ACCOUNT_HOLDER_DETAILS" EntityType="Self.ACCOUNT_HOLDER_DETAILS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fund_Transfer" EntityType="Self.Fund_Transfer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Register" EntityType="Self.User_Register" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ACCOUNT_H__CusID__38996AB5" Association="Self.FK__ACCOUNT_H__CusID__38996AB5">
+            <End Role="User_Register" EntitySet="User_Register" />
+            <End Role="ACCOUNT_HOLDER_DETAILS" EntitySet="ACCOUNT_HOLDER_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fund_Tran__TCCID__3E52440B" Association="Self.FK__Fund_Tran__TCCID__3E52440B">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="Fund_Transfer" EntitySet="Fund_Transfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__AccID__3B75D760" Association="Self.FK__Transacti__AccID__3B75D760">
+            <End Role="ACCOUNT_HOLDER_DETAILS" EntitySet="ACCOUNT_HOLDER_DETAILS" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WeBankModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ACCOUNT_HOLDER_DETAILS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fullname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fathername" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Adharno" Type="Int64" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="accounttype" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Branch" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Registration_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Phoneno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CusID" Type="Int32" />
+          <NavigationProperty Name="User_Register" Relationship="Self.FK__ACCOUNT_H__CusID__38996AB5" FromRole="ACCOUNT_HOLDER_DETAILS" ToRole="User_Register" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__AccID__3B75D760" FromRole="ACCOUNT_HOLDER_DETAILS" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Passcode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fund_Transfer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Transaction_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="account_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="To_account_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="amount" Type="Double" Nullable="false" />
+          <Property Name="TCCID" Type="Int32" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK__Fund_Tran__TCCID__3E52440B" FromRole="Fund_Transfer" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="amount" Type="Double" Nullable="false" />
+          <Property Name="Transaction_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Transaction_Type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AccID" Type="Int32" />
+          <NavigationProperty Name="ACCOUNT_HOLDER_DETAILS" Relationship="Self.FK__Transacti__AccID__3B75D760" FromRole="Transactions" ToRole="ACCOUNT_HOLDER_DETAILS" />
+          <NavigationProperty Name="Fund_Transfer" Relationship="Self.FK__Fund_Tran__TCCID__3E52440B" FromRole="Transactions" ToRole="Fund_Transfer" />
+        </EntityType>
+        <EntityType Name="User_Register">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Passcode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ACCOUNT_HOLDER_DETAILS" Relationship="Self.FK__ACCOUNT_H__CusID__38996AB5" FromRole="User_Register" ToRole="ACCOUNT_HOLDER_DETAILS" />
+        </EntityType>
+        <Association Name="FK__ACCOUNT_H__CusID__38996AB5">
+          <End Role="User_Register" Type="Self.User_Register" Multiplicity="0..1" />
+          <End Role="ACCOUNT_HOLDER_DETAILS" Type="Self.ACCOUNT_HOLDER_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Register">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ACCOUNT_HOLDER_DETAILS">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__AccID__3B75D760">
+          <End Role="ACCOUNT_HOLDER_DETAILS" Type="Self.ACCOUNT_HOLDER_DETAILS" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT_HOLDER_DETAILS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="AccID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Fund_Tran__TCCID__3E52440B">
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="0..1" />
+          <End Role="Fund_Transfer" Type="Self.Fund_Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Fund_Transfer">
+              <PropertyRef Name="TCCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WeBankEntities12" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ACCOUNT_HOLDER_DETAILS" EntityType="Self.ACCOUNT_HOLDER_DETAILS" />
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Fund_Transfer" EntityType="Self.Fund_Transfer" />
+          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
+          <EntitySet Name="User_Register" EntityType="Self.User_Register" />
+          <AssociationSet Name="FK__ACCOUNT_H__CusID__38996AB5" Association="Self.FK__ACCOUNT_H__CusID__38996AB5">
+            <End Role="User_Register" EntitySet="User_Register" />
+            <End Role="ACCOUNT_HOLDER_DETAILS" EntitySet="ACCOUNT_HOLDER_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__AccID__3B75D760" Association="Self.FK__Transacti__AccID__3B75D760">
+            <End Role="ACCOUNT_HOLDER_DETAILS" EntitySet="ACCOUNT_HOLDER_DETAILS" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fund_Tran__TCCID__3E52440B" Association="Self.FK__Fund_Tran__TCCID__3E52440B">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="Fund_Transfer" EntitySet="Fund_Transfer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WeBankModelStoreContainer" CdmEntityContainer="WeBankEntities12">
+          <EntitySetMapping Name="ACCOUNT_HOLDER_DETAILS">
+            <EntityTypeMapping TypeName="WeBankModel.ACCOUNT_HOLDER_DETAILS">
+              <MappingFragment StoreEntitySet="ACCOUNT_HOLDER_DETAILS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="account_number" ColumnName="account_number" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Fathername" ColumnName="Fathername" />
+                <ScalarProperty Name="Adharno" ColumnName="Adharno" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="accounttype" ColumnName="accounttype" />
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
+                <ScalarProperty Name="Registration_Date" ColumnName="Registration_Date" />
+                <ScalarProperty Name="Phoneno" ColumnName="Phoneno" />
+                <ScalarProperty Name="CusID" ColumnName="CusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="WeBankModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Passcode" ColumnName="Passcode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fund_Transfer">
+            <EntityTypeMapping TypeName="WeBankModel.Fund_Transfer">
+              <MappingFragment StoreEntitySet="Fund_Transfer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Transaction_id" ColumnName="Transaction_id" />
+                <ScalarProperty Name="account_number" ColumnName="account_number" />
+                <ScalarProperty Name="To_account_number" ColumnName="To_account_number" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="TCCID" ColumnName="TCCID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="WeBankModel.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="account_number" ColumnName="account_number" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="Transaction_Date" ColumnName="Transaction_Date" />
+                <ScalarProperty Name="Transaction_Type" ColumnName="Transaction_Type" />
+                <ScalarProperty Name="AccID" ColumnName="AccID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Register">
+            <EntityTypeMapping TypeName="WeBankModel.User_Register">
+              <MappingFragment StoreEntitySet="User_Register">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Passcode" ColumnName="Passcode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

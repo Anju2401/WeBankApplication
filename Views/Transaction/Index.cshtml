@@ -1,0 +1,85 @@
+﻿@model IEnumerable<WeBankApplication.Models.Transaction>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<body style="background-color:lightblue">
+
+
+
+    <br />
+
+    @using (Html.BeginForm(FormMethod.Get))
+    {
+        @Html.TextBox("Searching")
+        <input type="submit" value="search" />
+
+
+        @*<br />
+
+        @Html.RadioButton("searchtransactiontype", "Deposit")<span>Deposit</span>
+        @Html.RadioButton("searchtransactiontype", "Withdraw")<span>Withdraw</span>
+        @Html.RadioButton("searchtransactiontype", "Checkbalance")<span>Checkbalance</span>
+        <input type="submit" value="search" />*@
+    }
+
+    <br />
+
+    <br />
+
+
+    <h2>User Transaction Details</h2>
+
+    @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.account_number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction_Type)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.ACCOUNT_HOLDER_DETAILS.account_number)
+                </th>*@
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.account_number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Transaction_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Transaction_Type)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.ACCOUNT_HOLDER_DETAILS.account_number)
+                    </td>*@
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
+                    @Html.ActionLink("Details", "Details", new { id = item.ID })
+                    @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</body>

@@ -1,0 +1,140 @@
+﻿@model WeBankApplication.Models.Transaction
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<body style="background-color:lightblue">
+
+   @*<h1>@ViewBag.account_number</h1>*@
+
+    @*<h1>@cus.account_number</h1>*@
+     <br />
+
+    <br />
+    
+    <center>
+
+        <div class="w3-container">
+        <h1 > <b> Welcome 
+             <b style="color:palevioletred">@HttpContext.Current.User.Identity.Name</b></b></h1>
+        <p> </p>
+
+
+
+    </div>
+    </center>
+    
+
+
+  @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+@using (Html.BeginForm(FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Transaction</h4>
+    <hr />
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.account_number, htmlAttributes: new { @class = "control-label col-md-2" ,autocomplete = " off " })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.account_number, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.account_number, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.amount, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.amount, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.amount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Transaction_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Transaction_Date, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Transaction_Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Transaction_Type, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*<div class="col-md-10">
+                @Html.EditorFor(model => model.Transaction_Type, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Transaction_Type, "", new { @class = "text-danger" })
+            </div>*@
+
+        <div class="col-md-10">
+
+            @Html.DropDownList("Transaction_type", new SelectList(new List<string>
+       {
+           "--Select Option--",
+           "Credit",
+           "Debit",
+           "CheckBalance"
+       }), new { @class = "form-control" })
+        </div>
+
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.AccID, "AccID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("AccID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AccID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input onclick="myFunction1()" type="submit" value="Withdraw" name="btn" class="btn btn-default" />
+
+            <input onclick="myFunction2()" type="submit" value="Deposit" name="btn" class="btn btn-default" />
+
+
+            <input onclick="myFunction()" type="submit" value="CheckBalance" name="btn" class="btn btn-default" /><br /><br />
+        </div>
+    </div>
+    <div class="form-group">
+        <label style="color:green">Balance :@ViewBag.CheckBalance </label>
+        <div class="col-md-10">
+            @Html.ValidationMessageFor(model => model.amount, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+</div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+
+<script>
+    function myFunction() {
+        alert("Confirmation for Balance check");
+    }
+    function myFunction1() {
+        alert("Confirmation for Withdraw ");
+    }
+    function myFunction2() {
+        alert("Confirmation for  Deposit");
+    }
+
+
+
+
+</script>
+
+
+    </body>
